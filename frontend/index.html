@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HIV Dashboard Simulation</title>
+</head>
+<body>
+
+  <h1>HIV Dashboard Simulation</h1>
+
+  <h3>Ask AI</h3>
+  <input id="question" placeholder="Ask HIV trend" />
+  <button id="askBtn" onclick="askAI()">Ask</button>
+
+
+  <p id="answer"></p>
+
+  <hr>
+
+  <h3>Daily KPI Data</h3>
+  <button onclick="loadKPI()">Load KPI Data</button>
+
+  <pre id="kpiData"></pre>
+
+  <script>
+
+    async function loadKPI() {
+      const res = await fetch('http://localhost:3000/api/kpi');
+      const data = await res.json();
+      document.getElementById('kpiData').innerText =
+        JSON.stringify(data, null, 2);
+    }
+
+    async function askAI() {
+      const question = document.getElementById('question').value;
+
+      const res = await fetch('http://localhost:3000/api/ai/query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: question })
+      });
+
+      const data = await res.json();
+      document.getElementById('answer').innerText = data.answer;
+    }
+
+  </script>
+
+</body>
+</html>
