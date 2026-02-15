@@ -17,14 +17,12 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install root dependencies (Cypress)
+        run: npm install
+
       - name: Install backend dependencies
         run: |
           cd backend-node
-          npm install
-
-      - name: Install frontend dependencies
-        run: |
-          cd frontend
           npm install
 
       - name: Start backend
@@ -34,9 +32,8 @@ jobs:
         env:
           CI: true
 
-      - name: Run Cypress using official action
+      - name: Run Cypress (root)
         uses: cypress-io/github-action@v6
         with:
-          working-directory: frontend
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 60
