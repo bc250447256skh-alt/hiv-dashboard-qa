@@ -1,16 +1,20 @@
 {
   "name": "hiv-dashboard",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "HIV Dashboard API",
+  "main": "backend-node/server.js",
   "scripts": {
+    "start": "node backend-node/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "devDependencies": {
-    "cypress": "^15.10.0"
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "pg": "^8.18.0"
   }
 }
+
