@@ -1,25 +1,36 @@
 describe('KPI API', () => {
 
-  it('returns KPI data', () => {
+  let data;
+
+  before(() => {
     cy.request('/api/kpi').then((res) => {
-      expect(res.status).to.eq(200);
-      expect(res.body.length).to.be.greaterThan(0);
-      expect(res.body[0]).to.have.property('report_date');
-      expect(res.body[0]).to.have.property('tests');
-      expect(res.body[0]).to.have.property('positive');
-      expect(res.body[0]).to.have.property('positivity_rate');
+      data = res.body;
     });
+  });
+
+  it('returns KPI data', () => {
+    expect(data.length).to.be.greaterThan(0);
+    expect(data[0]).to.have.property('report_date');
   });
 
   it('validates positivity rate calculation', () => {
-    cy.request('/api/kpi').then((res) => {
-      const row = res.body[0];
+    const row = data[0];
+    const calculatedRate = row.positive / row.tests;
 
-      const calculatedRate = row.positive / row.tests;
-
-      expect(row.positivity_rate).to.be.closeTo(calculatedRate, 0.0001);
-    });
+    expect(row.positivity_rate).to.be.closeTo(calculatedRate, 0.0001);
   });
+
+it('validates field data types', () => {
+  cy.request('/api/kpi').then((res) => {
+    const record = res.body[0];
+
+    expect(record.report_date).to.be.a('string');
+    expect(record.tests).to.be.a('number');
+    expect(record.positive).to.be.a('number');
+    expect(record.positivity_rate).to.be.a('number');
+  });
+});
+
 
 });
 

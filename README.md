@@ -1,3 +1,7 @@
+# HIV Dashboard QA Automation
+
+![CI](https://github.com/bc250447256skh-alt/hiv-dashboard-qa/actions/workflows/ci.yml/badge.svg)
+
 # HIV Dashboard Simulation (QA Automation Project)
 
 ## Project Overview
